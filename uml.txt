@@ -1,0 +1,10 @@
+@startuml
+(Piramida8) -> (Piramida)
+(Piramida8) -> (Piramida1)
+(Piramida8) -> (Piramida2)
+(Piramida8) -> (Piramida3)
+(Piramida8) -> (Piramida4)
+(Piramida8) -> (Piramida5)
+(Piramida8) -> (Piramida6)
+(Piramida5) -> (Piramida6)
+@enduml
