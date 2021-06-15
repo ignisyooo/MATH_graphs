@@ -4,8 +4,6 @@
 #include <iostream>
 
 
-
-
 int main (void)
 {
     DataCreator *d = new DataCreator("uml.txt");
@@ -14,8 +12,7 @@ int main (void)
 
     Lifo *list = new Lifo();
 
-    find_all_traces(list, path_table, d->GetNodesNumber());
-
+    best_trace(list, path_table, d->GetNodesNumber());
 
     return 0;
 }

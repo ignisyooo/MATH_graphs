@@ -4,7 +4,6 @@
 #include <iostream>
 #include "LIFO.hpp"
 
-void find_all_traces(Lifo *list, uint32_t **path_array, int nodesnn);
-bool DFSfindCycle(int start, int current, int nodesnn, uint32_t **path_array, Lifo *list);
+void best_trace(Lifo *list, uint32_t **path_array, int nodesnn);
 
 #endif /* DFS_HPP*/

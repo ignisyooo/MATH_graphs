@@ -5,9 +5,10 @@
 
 
 static bool *visited;
+static uint32_t **cycle;
 
 
-bool DFSfindCycle(int start, int current, int nodesnn, uint32_t **path_array, Lifo *list)
+static bool DFSfindCycle(int start, int current, int nodesnn, uint32_t **path_array, Lifo *list)
 {
 	visited[current] = true;
 	for (int i = 0; i < nodesnn; i++)
@@ -22,28 +23,33 @@ bool DFSfindCycle(int start, int current, int nodesnn, uint32_t **path_array, Li
 	return false;
 }
 
-void find_all_traces(Lifo *list, uint32_t **path_array, int nodesnn)
+static void init_cycle_array(int nodesnn)
 {
-    uint32_t **cycle;
+	cycle = new uint32_t *[nodesnn];
+
+	for (int i = 0; i < nodesnn; ++i)
+	{
+		cycle[i] = new uint32_t[nodesnn];
+	}
+
+	for (int i = 0; i < nodesnn; ++i)
+	{
+		for (int j = 0; j < nodesnn; ++j)
+		{
+			cycle[i][j] = nodesnn;
+		}
+	}
+}
+
+static void find_all_traces(Lifo *list, uint32_t **path_array, int nodesnn)
+{
 	int i = 0;
 	int j = 0;
 	int top_value = 0;
 
 	visited = new bool[nodesnn];
-	cycle = new uint32_t *[nodesnn];
 
-	for (i = 0; i < nodesnn; ++i)
-	{
-		cycle[i] = new uint32_t[nodesnn];
-	}
-
-	for (i = 0; i < nodesnn; ++i)
-	{
-		for (j = 0; j < nodesnn; ++j)
-		{
-			cycle[i][j] = nodesnn;
-		}
-	}
+	init_cycle_array(nodesnn);
 
 	for (i = 0; i < nodesnn; ++i)
 	{
@@ -73,7 +79,7 @@ void find_all_traces(Lifo *list, uint32_t **path_array, int nodesnn)
 		}
 	}
 
-    for (int i = 0; i < nodesnn; ++i)
+	for (int i = 0; i < nodesnn; ++i)
     {
         for (int j = 0; j < nodesnn; ++j)
         {
@@ -81,5 +87,11 @@ void find_all_traces(Lifo *list, uint32_t **path_array, int nodesnn)
         }
         std::cout<<std::endl;
     }
+
+}
+
+void best_trace(Lifo *list, uint32_t **path_array, int nodesnn)
+{
+	find_all_traces(list, path_array, nodesnn);
 
 }
