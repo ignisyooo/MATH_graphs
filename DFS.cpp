@@ -7,7 +7,7 @@
 static bool *visited;
 static uint32_t **cycle;
 
-#define ENTER_TO_VALLEY 0
+#define ENTER_TO_VALLEY 1
 
 static bool DFSfindCycle(int start, int current, int nodesnn, uint32_t **path_array, Lifo *list)
 {
@@ -192,7 +192,7 @@ static void trace(int nodesnn)
 	{
 		std::cout<<"Tomb"<<cycle[best][i]<<" ->";
 	}
-	std::cout<<"Tomb"<<cycle[best][counter_max];
+	std::cout<<"Tomb"<<cycle[best][0];
 	std::cout<<std::endl;
 	std::cout<<"You robbed "<<counter_max - 1<<" tombs\n";
 }
