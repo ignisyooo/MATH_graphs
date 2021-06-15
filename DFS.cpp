@@ -7,7 +7,7 @@
 static bool *visited;
 static uint32_t **cycle;
 
-#define ENTER_TO_VALLEY 1
+#define ENTER_TO_VALLEY 0
 
 static bool DFSfindCycle(int start, int current, int nodesnn, uint32_t **path_array, Lifo *list)
 {
@@ -80,18 +80,6 @@ static void find_all_traces(Lifo *list, uint32_t **path_array, int nodesnn)
 		}
 	}
 
-
-	for (int i = 0; i < nodesnn; ++i)
-    {
-        for (int j = 0; j < nodesnn; ++j)
-        {
-            std::cout<<cycle[i][j]<<", ";
-        }
-        std::cout<<std::endl;
-    }
-
-	std::cout<<std::endl;
-
 }
 
 static void clean_up(int nodesnn)
@@ -108,7 +96,7 @@ static void clean_up(int nodesnn)
 				counter++;
 			}
 		}
-		std::cout<<"i = "<<i<<" , counter = "<<counter<<std::endl;
+
 		if(counter == nodesnn - 1)
 		{
 			for(int j = 0; j < nodesnn; ++j)
@@ -175,23 +163,55 @@ static void clean_up(int nodesnn)
 
 	delete[] tmp;
 
-
-	for (int i = 0; i < nodesnn; ++i)
-    {
-        for (int j = 0; j < nodesnn; ++j)
-        {
-            std::cout<<cycle[i][j]<<", ";
-        }
-        std::cout<<std::endl;
-    }
-
-	std::cout<<std::endl;
-
 }
+
+static void trace(int nodesnn)
+{
+	int counter = 0;
+	int counter_max = 0;
+	int best = 0;
+	for(int i = 0; i < nodesnn; ++i)
+	{
+		counter = 0;
+		for(int j = 0; j <nodesnn; ++j)
+		{
+			if(cycle[i][j] != nodesnn)
+			{
+				counter++;
+			}
+		}
+		if(counter_max < counter)
+		{
+			counter_max = counter;
+			best = i;
+		}
+	}
+
+	std::cout<<"Here is your way: "<<std::endl;
+	for(int i = 0; i < counter_max - 1; ++i)
+	{
+		std::cout<<"Tomb"<<cycle[best][i]<<" ->";
+	}
+	std::cout<<"Tomb"<<cycle[best][counter_max];
+	std::cout<<std::endl;
+	std::cout<<"You robbed "<<counter_max - 1<<" tombs\n";
+}
+
 
 void best_trace(Lifo *list, uint32_t **path_array, int nodesnn)
 {
+
 	find_all_traces(list, path_array, nodesnn);
 	clean_up(nodesnn);
+
+	trace(nodesnn);
+
+	for(int i = 0; i < nodesnn; ++i)
+	{
+		delete [] cycle[i];
+	}
+
+	delete [] cycle;
+	delete [] visited;
 
 }
