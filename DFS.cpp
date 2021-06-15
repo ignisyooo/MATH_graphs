@@ -7,6 +7,7 @@
 static bool *visited;
 static uint32_t **cycle;
 
+#define ENTER_TO_VALLEY 1
 
 static bool DFSfindCycle(int start, int current, int nodesnn, uint32_t **path_array, Lifo *list)
 {
@@ -79,6 +80,7 @@ static void find_all_traces(Lifo *list, uint32_t **path_array, int nodesnn)
 		}
 	}
 
+
 	for (int i = 0; i < nodesnn; ++i)
     {
         for (int j = 0; j < nodesnn; ++j)
@@ -88,10 +90,108 @@ static void find_all_traces(Lifo *list, uint32_t **path_array, int nodesnn)
         std::cout<<std::endl;
     }
 
+	std::cout<<std::endl;
+
+}
+
+static void clean_up(int nodesnn)
+{
+	/* Clear empty cycles */
+	int counter;
+	for(int i = 0; i < nodesnn; ++i)
+	{
+		counter = 0;
+		for(int j = 0; j < nodesnn; ++j)
+		{
+			if(cycle[i][j] == nodesnn)
+			{
+				counter++;
+			}
+		}
+		std::cout<<"i = "<<i<<" , counter = "<<counter<<std::endl;
+		if(counter == nodesnn - 1)
+		{
+			for(int j = 0; j < nodesnn; ++j)
+			{
+				cycle[i][j] = nodesnn;
+			}
+		}
+	}
+
+	/* Sorting algorithm depending on the input vertex */
+	uint32_t *tmp = new uint32_t[nodesnn];
+	int it_main = 0;
+	int it_tmp = 0;
+	int start_value = 0;
+
+	for(int i = 0; i < nodesnn; ++i)
+	{
+		tmp[i] = nodesnn;
+	}
+
+	for(int i = 0; i < nodesnn; ++i)
+	{
+		if (cycle[i][0] == ENTER_TO_VALLEY || cycle[i][0] == nodesnn)
+		{
+			continue;
+		}
+		else
+		{
+			it_tmp = 0;
+			start_value = cycle[i][0];
+			tmp[it_tmp++] = ENTER_TO_VALLEY;
+			for(it_main = 0; it_main < nodesnn; ++it_main)
+			{
+				if(cycle[i][it_main] == ENTER_TO_VALLEY)
+				{
+					break;
+				}
+			}
+
+			for(int m = it_main + 1; m < nodesnn; ++m)
+			{
+				if(cycle[i][m] == start_value)
+				{
+					break;
+				}
+				tmp[it_tmp++] = cycle[i][m];
+			}
+
+			for(int m = 0; m <=it_main; ++m)
+			{
+				tmp[it_tmp++] = cycle[i][m];
+			}
+
+			tmp[--it_tmp] = ENTER_TO_VALLEY;
+
+			for(int m = 0; m < nodesnn; ++m)
+			{
+				cycle[i][m] = tmp[m];
+				tmp[m] = nodesnn;
+			}
+		}
+
+	}
+
+	delete[] tmp;
+
+
+	for (int i = 0; i < nodesnn; ++i)
+    {
+        for (int j = 0; j < nodesnn; ++j)
+        {
+            std::cout<<cycle[i][j]<<", ";
+        }
+        std::cout<<std::endl;
+    }
+
+	std::cout<<std::endl;
+
 }
 
 void best_trace(Lifo *list, uint32_t **path_array, int nodesnn)
 {
 	find_all_traces(list, path_array, nodesnn);
+	clean_up(nodesnn);
 
 }

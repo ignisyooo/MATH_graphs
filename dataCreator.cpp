@@ -12,7 +12,7 @@ DataCreator::DataCreator(std::string path)
         std::string cmd, photo,line,tmp,nodes,tmp1,tmp2;
         uint16_t index,indexstart,indexstop;
         uint32_t number1,number2;
-        cmd = "java -jar plantuml.exe " + path;
+        cmd = "java -jar plantuml.jar " + path;
         system(cmd.c_str());
         photo = path;
         while (photo.back()!='.')
@@ -37,17 +37,19 @@ DataCreator::DataCreator(std::string path)
                 {
                     nodes += tmp;
                     nodes += ", ";
-                    nodes += std::to_string(nmbNodes);
+                    //nodes += std::to_string(nmbNodes);
+                    nodes += tmp.back();
                     nodes += "; ";
                     nmbNodes++;
                 }
-                tmp = line.substr(index+5);
+                tmp = line.substr(index+4);
                 tmp = tmp.substr(0,tmp.size()-1);
                 if (nodes.find(tmp) == std::string::npos)
                 {
                     nodes += tmp;
                     nodes += ", ";
-                    nodes += std::to_string(nmbNodes);
+                    //nodes += std::to_string(nmbNodes);
+                    nodes += tmp.back();
                     nodes += "; ";
                     nmbNodes++;
                 }
