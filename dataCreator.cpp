@@ -10,7 +10,6 @@ DataCreator::DataCreator(std::string path)
   {
         std::fstream file;
         std::string cmd, photo,line,tmp,nodes,tmp1,tmp2;
-        uint32_t nmbNodes = 0;
         uint16_t index,indexstart,indexstop;
         uint32_t number1,number2;
         cmd = "java -jar plantuml.exe " + path;
@@ -37,9 +36,9 @@ DataCreator::DataCreator(std::string path)
                 if (nodes.find(tmp) == std::string::npos)
                 {
                     nodes += tmp;
-                    nodes += ",";
+                    nodes += ", ";
                     nodes += std::to_string(nmbNodes);
-                    nodes += ";";
+                    nodes += "; ";
                     nmbNodes++;
                 }
                 tmp = line.substr(index+5);
@@ -47,9 +46,9 @@ DataCreator::DataCreator(std::string path)
                 if (nodes.find(tmp) == std::string::npos)
                 {
                     nodes += tmp;
-                    nodes += ",";
+                    nodes += ", ";
                     nodes += std::to_string(nmbNodes);
-                    nodes += ";";
+                    nodes += "; ";
                     nmbNodes++;
                 }
             }
@@ -98,6 +97,7 @@ DataCreator::DataCreator(std::string path)
                number2 = std::stoi( tmp );
 
                tab[number1][number2] = 1;
+               tab[number2][number1] = 1;
             }
         }
 }
@@ -105,4 +105,9 @@ DataCreator::DataCreator(std::string path)
 uint32_t ** DataCreator::GetTab (void)
 {
     return tab;
+}
+
+uint32_t DataCreator::GetNodesNumber(void)
+{
+    return nmbNodes;
 }
