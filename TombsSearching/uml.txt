@@ -1,0 +1,14 @@
+@startuml
+(Piramida0) - (Piramida1)
+(Piramida1) - (Piramida2)
+(Piramida1) - (Piramida5)
+(Piramida1) - (Piramida7)
+(Piramida2) - (Piramida3)
+(Piramida2) - (Piramida4)
+(Piramida3) - (Piramida7)
+(Piramida4) - (Piramida5)
+(Piramida5) - (Piramida7)
+(Piramida5) - (Piramida6)
+(Piramida5) - (Piramida1)
+(Piramida6) - (Piramida2)
+@enduml
