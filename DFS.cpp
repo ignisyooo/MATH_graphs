@@ -7,6 +7,8 @@
 static bool *visited;
 static uint32_t **cycle;
 
+static int* tombs, * cycle_of_tombs;
+
 #define ENTER_TO_VALLEY 1
 
 static bool DFSfindCycle(int start, int current, int nodesnn, uint32_t **path_array, Lifo *list)
@@ -86,20 +88,20 @@ static void clean_up(int nodesnn)
 {
 	/* Clear empty cycles */
 	int counter;
-	for(int i = 0; i < nodesnn; ++i)
+	for (int i = 0; i < nodesnn; ++i)
 	{
 		counter = 0;
-		for(int j = 0; j < nodesnn; ++j)
+		for (int j = 0; j < nodesnn; ++j)
 		{
-			if(cycle[i][j] == nodesnn)
+			if (cycle[i][j] == nodesnn)
 			{
 				counter++;
 			}
 		}
 
-		if(counter == nodesnn - 1)
+		if (counter == nodesnn - 1)
 		{
-			for(int j = 0; j < nodesnn; ++j)
+			for (int j = 0; j < nodesnn; ++j)
 			{
 				cycle[i][j] = nodesnn;
 			}
@@ -107,17 +109,17 @@ static void clean_up(int nodesnn)
 	}
 
 	/* Sorting algorithm depending on the input vertex */
-	uint32_t *tmp = new uint32_t[nodesnn];
+	uint32_t* tmp = new uint32_t[nodesnn];
 	int it_main = 0;
 	int it_tmp = 0;
 	int start_value = 0;
 
-	for(int i = 0; i < nodesnn; ++i)
+	for (int i = 0; i < nodesnn; ++i)
 	{
 		tmp[i] = nodesnn;
 	}
 
-	for(int i = 0; i < nodesnn; ++i)
+	for (int i = 0; i < nodesnn; ++i)
 	{
 		if (cycle[i][0] == ENTER_TO_VALLEY || cycle[i][0] == nodesnn)
 		{
@@ -128,31 +130,31 @@ static void clean_up(int nodesnn)
 			it_tmp = 0;
 			start_value = cycle[i][0];
 			tmp[it_tmp++] = ENTER_TO_VALLEY;
-			for(it_main = 0; it_main < nodesnn; ++it_main)
+			for (it_main = 0; it_main < nodesnn; ++it_main)
 			{
-				if(cycle[i][it_main] == ENTER_TO_VALLEY)
+				if (cycle[i][it_main] == ENTER_TO_VALLEY)
 				{
 					break;
 				}
 			}
 
-			for(int m = it_main + 1; m < nodesnn; ++m)
+			for (int m = it_main + 1; m < nodesnn; ++m)
 			{
-				if(cycle[i][m] == start_value)
+				if (cycle[i][m] == start_value)
 				{
 					break;
 				}
 				tmp[it_tmp++] = cycle[i][m];
 			}
 
-			for(int m = 0; m <=it_main; ++m)
+			for (int m = 0; m <= it_main; ++m)
 			{
 				tmp[it_tmp++] = cycle[i][m];
 			}
 
 			tmp[--it_tmp] = ENTER_TO_VALLEY;
 
-			for(int m = 0; m < nodesnn; ++m)
+			for (int m = 0; m < nodesnn; ++m)
 			{
 				cycle[i][m] = tmp[m];
 				tmp[m] = nodesnn;
@@ -165,46 +167,162 @@ static void clean_up(int nodesnn)
 
 }
 
-static void trace(int nodesnn)
+static void DeleteTheSameCycles(int nodesnn)
 {
 	int counter = 0;
-	int counter_max = 0;
-	int best = 0;
-	for(int i = 0; i < nodesnn; ++i)
+
+	for (int i = 0; i < nodesnn; ++i)
+	{
+		if (cycle[i][0] == nodesnn)
+		{
+			continue;
+		}
+		else
+		{
+			for (int j = 0; j < nodesnn; ++j)
+			{
+				if (j == i)
+				{
+					continue;
+				}
+				else
+				{
+					counter = 0;
+					for (int m = 0; m < nodesnn; ++m)
+					{
+						if (cycle[j][m] == cycle[i][m])
+						{
+							counter++;
+						}
+					}
+
+					if (counter == nodesnn)
+					{
+						for (int m = 0; m < nodesnn; ++m)
+						{
+							cycle[j][m] = nodesnn;
+						}
+					}
+				}
+			}
+		}
+	}
+
+	for (int i = 0; i < nodesnn; ++i)
+	{
+		if (cycle[i][0] == nodesnn || cycle[i][0] == 0)
+		{
+			continue;
+		}
+		else
+		{
+			for (int j = 0; j < nodesnn; ++j)
+			{
+				cycle[i][j] = nodesnn;
+			}
+		}
+	}
+
+}
+
+void check_traces(int nodesnn, uint32_t** path_array)
+{
+	tombs = new int[nodesnn];
+	int counter = 0;
+	for (int i = 0; i < nodesnn; ++i)
+	{
+		tombs[i] = 0;
+	}
+
+	for (int i = 0; i < nodesnn; ++i)
 	{
 		counter = 0;
-		for(int j = 0; j <nodesnn; ++j)
+		for (int j = 0; j < nodesnn; ++j)
 		{
-			if(cycle[i][j] != nodesnn)
+			if (path_array[i][j] == 1)
 			{
 				counter++;
 			}
 		}
-		if(counter_max < counter)
+
+		if (counter == 1)
 		{
-			counter_max = counter;
-			best = i;
+			for (int j = 0; j < nodesnn; ++j)
+			{
+				if (path_array[i][j] == 1)
+				{
+					tombs[j]++;
+				}
+			}
+		}
+	}
+}
+
+void count_tombs(int nodesnn)
+{
+	cycle_of_tombs = new int[nodesnn];
+	for (int i = 0; i < nodesnn; ++i)
+	{
+		cycle_of_tombs[i] = 0;
+	}
+
+	for (int i = 0; i < nodesnn; ++i)
+	{
+		if (cycle[i][0] == 0)
+		{
+			cycle_of_tombs[i] = 0;
+			for (int j = 0; j < nodesnn; ++j)
+			{
+				if (cycle[i][j] == nodesnn)
+				{
+					break;
+				}
+				else
+				{
+					cycle_of_tombs[i] += tombs[cycle[i][j]];
+				}
+			}
+			cycle_of_tombs[i] -= tombs[0];
+		}
+	}
+}
+
+void select_best_traces(int nodesnn)
+{
+	int max = 0;
+	int max_index = 0;
+	for (int i = 0; i < nodesnn; ++i)
+	{
+		if (cycle_of_tombs[i] > max)
+		{
+			max_index = i;
+			max = cycle_of_tombs[i];
 		}
 	}
 
-	std::cout<<"Here is your way: "<<std::endl;
-	for(int i = 0; i < counter_max - 1; ++i)
+	std::cout << "Best trace: ";
+	for (int i = 0; i < nodesnn; ++i)
 	{
-		std::cout<<"Tomb"<<cycle[best][i]<<" ->";
+		if (cycle[max_index][i] == nodesnn)
+		{
+			break;
+		}
+		std::cout << cycle[max_index][i] << ", ";
 	}
-	std::cout<<"Tomb"<<cycle[best][0];
-	std::cout<<std::endl;
-	std::cout<<"You robbed "<<counter_max - 1<<" tombs\n";
+	std::cout << std::endl;
+	std::cout << "Plundered tombs: " << max << std::endl;
 }
-
 
 void best_trace(Lifo *list, uint32_t **path_array, int nodesnn)
 {
 
 	find_all_traces(list, path_array, nodesnn);
 	clean_up(nodesnn);
+	DeleteTheSameCycles(nodesnn);
 
-	trace(nodesnn);
+	check_traces(nodesnn, path_array);
+	count_tombs(nodesnn);
+	select_best_traces(nodesnn);
 
 	for(int i = 0; i < nodesnn; ++i)
 	{
@@ -213,5 +331,8 @@ void best_trace(Lifo *list, uint32_t **path_array, int nodesnn)
 
 	delete [] cycle;
 	delete [] visited;
+	delete[] cycle_of_tombs;
+	delete[] tombs;
+
 
 }
