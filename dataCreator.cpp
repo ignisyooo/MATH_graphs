@@ -25,31 +25,37 @@ DataCreator::DataCreator(std::string path)
     file.open(path, std::ios::in);
     if (file.good() == true)
     {
+
         while (getline(file, line))
         {
+
             if (line.find("@startuml") != std::string::npos)
                 continue;
+
             if (line.find("@enduml") != std::string::npos)
                 continue;
+
             index = line.find(" ");
             tmp = line.substr(1, index - 2);
+
             if (nodes.find(tmp) == std::string::npos)
             {
                 nodes += tmp;
                 nodes += ", ";
-                //nodes += std::to_string(nmbNodes);
-                nodes += tmp.back();
+                nodes += std::to_string(nmbNodes);
+                //nodes += tmp.back();
                 nodes += "; ";
                 nmbNodes++;
             }
             tmp = line.substr(index + 4);
             tmp = tmp.substr(0, tmp.size() - 1);
+
             if (nodes.find(tmp) == std::string::npos)
             {
                 nodes += tmp;
                 nodes += ", ";
-                //nodes += std::to_string(nmbNodes);
-                nodes += tmp.back();
+                nodes += std::to_string(nmbNodes);
+                //nodes += tmp.back();
                 nodes += "; ";
                 nmbNodes++;
             }
@@ -78,9 +84,8 @@ DataCreator::DataCreator(std::string path)
                 continue;
             index = line.find(" ");
             tmp1 = line.substr(1, index - 2);
-            tmp2 = line.substr(index + 5);
+            tmp2 = line.substr(index + 4);
             tmp2 = tmp2.substr(0, tmp2.size() - 1);
-
 
             index = nodes.find(tmp1);
             tmp = nodes.substr(index);

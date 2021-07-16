@@ -14,7 +14,7 @@ class DataCreator
 
     private:
         uint32_t ** tab;
-        uint32_t nmbNodes;
+        uint32_t nmbNodes = 0;
 };
 
 
