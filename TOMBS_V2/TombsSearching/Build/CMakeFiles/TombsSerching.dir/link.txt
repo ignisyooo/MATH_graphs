@@ -1,0 +1,1 @@
+/usr/bin/c++ -std=c++17 -g -std=c++17 CMakeFiles/TombsSerching.dir/Source/DFS.cpp.o CMakeFiles/TombsSerching.dir/Source/LIFO.cpp.o CMakeFiles/TombsSerching.dir/Source/dataCreator.cpp.o CMakeFiles/TombsSerching.dir/Source/main.cpp.o -o TombsSerching 

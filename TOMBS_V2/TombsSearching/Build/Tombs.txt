@@ -1,0 +1,11 @@
+@start
+(Tomb0) - (Tomb1)
+(Tomb1) - (Tomb2)
+(Tomb1) - (Tomb3)
+(Tomb1) - (Tomb4)
+(Tomb4) - (Tomb5)
+(Tomb4) - (Tomb6)
+(Tomb6) - (Tomb7)
+(Tomb6) - (Tomb8)
+(Tomb6) - (Tomb0)
+@end

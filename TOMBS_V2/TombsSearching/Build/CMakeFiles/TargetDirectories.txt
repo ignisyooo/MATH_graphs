@@ -1,0 +1,3 @@
+/mnt/c/Users/rzesz/Desktop/Studia/Matma/TombsSearching/Build/CMakeFiles/rebuild_cache.dir
+/mnt/c/Users/rzesz/Desktop/Studia/Matma/TombsSearching/Build/CMakeFiles/edit_cache.dir
+/mnt/c/Users/rzesz/Desktop/Studia/Matma/TombsSearching/Build/CMakeFiles/TombsSerching.dir
