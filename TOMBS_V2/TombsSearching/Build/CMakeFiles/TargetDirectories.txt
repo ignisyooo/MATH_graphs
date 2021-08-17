@@ -1,3 +1,3 @@
-/mnt/c/Users/rzesz/Desktop/Studia/Matma/TombsSearching/Build/CMakeFiles/rebuild_cache.dir
-/mnt/c/Users/rzesz/Desktop/Studia/Matma/TombsSearching/Build/CMakeFiles/edit_cache.dir
-/mnt/c/Users/rzesz/Desktop/Studia/Matma/TombsSearching/Build/CMakeFiles/TombsSerching.dir
+C:/Users/rzesz/Desktop/Coding/Code/MATH_graphs/MATH_graphs/TOMBS_V2/TombsSearching/bld/CMakeFiles/TombsSerching.dir
+C:/Users/rzesz/Desktop/Coding/Code/MATH_graphs/MATH_graphs/TOMBS_V2/TombsSearching/bld/CMakeFiles/ALL_BUILD.dir
+C:/Users/rzesz/Desktop/Coding/Code/MATH_graphs/MATH_graphs/TOMBS_V2/TombsSearching/bld/CMakeFiles/ZERO_CHECK.dir

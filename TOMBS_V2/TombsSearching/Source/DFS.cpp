@@ -221,7 +221,7 @@ void Run(const string &file_path)
 
 void Run(void)
 {
-    const string file_path ("../Build/Tombs.txt");
+    const string file_path ("../Tombs.txt");
 
     namespace fs = std::filesystem;
 

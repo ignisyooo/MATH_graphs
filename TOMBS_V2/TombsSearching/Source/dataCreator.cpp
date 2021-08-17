@@ -26,7 +26,7 @@ void DataCreator::ReadVertFromFile(const string &filePath)
 {
     fstream file;
     string line;
-    int tMaxVal;
+    int tMaxVal { 0 };
 
     file.open(filePath, std::ios::in);
 
